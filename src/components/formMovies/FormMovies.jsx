@@ -115,9 +115,10 @@ const FormPeliculas = () => {
           {editId ? 'Editar' : 'Películas'}
         </h1>
 
-        <div className="max-w-2xl mx-auto">
-          <form className="bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-8 mb-8 shadow-2xl shadow-black/30 ring-1 ring-white/5 font-omen-body" onSubmit={handleSubmit}>
-            <div className="space-y-4">
+        <div className="mx-auto">
+          <div className="max-w-2xl mx-auto">
+            <form className="w-full bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-8 mb-8 shadow-2xl shadow-black/30 ring-1 ring-white/5 font-omen-body" onSubmit={handleSubmit}>
+              <div className="space-y-6">
               <div>
                 <input
                   type="text"
@@ -173,8 +174,8 @@ const FormPeliculas = () => {
                   value={formData.sinopsis}
                   onChange={handleChange}
                   placeholder="Sinopsis"
-                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-700/70 focus:border-red-700/70 transition"
-                  rows="4"
+                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-700/70 focus:border-red-700/70 transition min-h-[140px]"
+                  rows="6"
                 />
               </div>
             </div>
@@ -195,31 +196,33 @@ const FormPeliculas = () => {
                   Cancelar
                 </button>
               )}
-            </div>
-          </form>
+              </div>
+            </form>
+          </div>
 
-          <div className="space-y-4">
+          <div className="w-full max-w-[1600px] mx-auto px-4 md:px-6">
+            <div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-4 gap-y-6">
             {peliculas.length === 0 ? (
               <p className="text-center text-gray-300 text-lg py-10">No hay películas registradas</p>
             ) : (
               peliculas.map(pelicula => (
-                <div key={pelicula.id} className="bg-black/80 backdrop-blur-md border border-white/10 rounded-lg p-6 shadow-lg hover:border-red-700/50 transition">
-                  <div className="flex flex-col md:flex-row md:justify-between md:items-center gap-4">
+                <div key={pelicula.id} className="bg-black/30 hover:bg-black/40 backdrop-blur-md border border-white/10 rounded-lg p-3 shadow-lg hover:border-red-700/50 transition min-h-[120px]">
+                  <div className="flex flex-col justify-between h-full gap-4">
                     <div>
-                      <h3 className="text-xl font-bold text-red-700 mb-2 uppercase">{pelicula.titulo}</h3>
-                      <p className="text-gray-300"><span className="text-gray-400">Año:</span> {pelicula.anio}</p>
-                      <p className="text-gray-300"><span className="text-gray-400">Rating:</span> {typeof pelicula.rating === 'number' ? pelicula.rating.toFixed(1) : pelicula.rating}</p>
+                      <h3 title={pelicula.titulo} className="text-red-600 font-semibold uppercase tracking-wide text-sm truncate">{pelicula.titulo}</h3>
+                      <p className="text-gray-300 text-xs mt-2"><span className="text-gray-400">Año:</span> {pelicula.anio}</p>
+                      <p className="text-gray-300 text-xs"><span className="text-gray-400">Rating:</span> {typeof pelicula.rating === 'number' ? pelicula.rating.toFixed(1) : pelicula.rating}</p>
                     </div>
-                    <div className="flex gap-2">
+                    <div className="flex gap-2 justify-end">
                       <button 
                         onClick={() => handleEdit(pelicula)} 
-                        className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-sm uppercase rounded transition duration-300"
+                        className="px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase rounded transition duration-300"
                       >
                         Editar
                       </button>
                       <button 
                         onClick={() => handleDelete(pelicula.id)} 
-                        className="px-4 py-2 bg-red-700 hover:bg-red-800 text-white font-bold text-sm uppercase rounded transition duration-300"
+                        className="px-2 py-1 bg-red-700 hover:bg-red-800 text-white font-bold text-xs uppercase rounded transition duration-300"
                       >
                         Borrar
                       </button>
@@ -228,6 +231,7 @@ const FormPeliculas = () => {
                 </div>
               ))
             )}
+            </div>
           </div>
         </div>
       </div>
@@ -236,3 +240,6 @@ const FormPeliculas = () => {
 };
 
 export default FormPeliculas;
+
+
+
