@@ -51,7 +51,8 @@ export default function MovieDetail() {
     }
 
     return (
-        <div className="min-h-screen bg-neutral-950 py-12 px-4 md:px-6 lg:px-8">
+        <div className="min-h-screen bg-neutral-950 py-12 px-4 md:px-6 lg:px-8"
+        style={{ backgroundImage: "url('/img/moviesbackground.png')" }}>
             <div className="max-w-6xl mx-auto">
                 <button
                     onClick={() => navigate("/movies")}
