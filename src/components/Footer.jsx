@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import omenLogoFooter from "../assets/home/the-omen-logo-footer.png";
+import bloodSplatter from "./img/blood.png";
 
 export default function Footer() {
     const year = new Date().getFullYear();
@@ -9,11 +10,11 @@ export default function Footer() {
             aria-label="Footer THE OMEN"
             className="mt-12 border-t border-[#b30000]/30 bg-[#050505]"
         >
-            {/* Línea glow superior */}
+ 
             <div className="h-0.5 w-full bg-linear-to-r from-transparent via-[#ff1a1a]/60 to-transparent" />
             <div className="mx-auto max-w-6xl px-5 py-12 sm:px-6 lg:px-8">
                 <div className="grid gap-12 md:grid-cols-3">
-                    {/* Marca */}
+
                     <section aria-label="Marca" className="space-y-4">
                         <Link
                             to="/"
@@ -43,7 +44,7 @@ export default function Footer() {
                         </div>
                     </section>
 
-                    {/* Navegación */}
+
                     <nav aria-label="Navegación" className="space-y-4">
                         <p className="font-omen-title text-sm uppercase tracking-[0.25em] text-[#f2f2f2]">
                             Navegación
@@ -93,7 +94,7 @@ export default function Footer() {
                         </ul>
                     </nav>
 
-                    {/* Información */}
+    
                     <section aria-label="Información" className="space-y-4">
                         <p className="font-omen-title text-sm uppercase tracking-[0.25em] text-[#f2f2f2]">
                             Información
@@ -128,15 +129,24 @@ export default function Footer() {
                     </section>
                 </div>
 
-                {/* Línea inferior */}
+
                 <div className="mt-12 flex flex-col gap-3 border-t border-[#b30000]/20 pt-6 sm:flex-row sm:items-center sm:justify-between">
                     <p className="font-omen-body text-xs text-[#b5b5b5]">
                         © {year} THE OMEN. Todos los derechos reservados.
                     </p>
 
-                    <p className="font-omen-body text-xs text-[#b5b5b5]/80">
-                        Has cruzado el umbral
-                    </p>
+                    <div className="relative group">
+    <p className="font-omen-body text-xs text-[#b5b5b5]/80 cursor-pointer transition-colors duration-300 group-hover:text-[#ff1a1a]">
+        Has cruzado el umbral
+    </p>
+    
+    <img
+        src={bloodSplatter}
+        alt=""
+        className="absolute -top-8 left-1/2 -translate-x-1/2 w-32 h-auto opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"
+        aria-hidden="true"
+    />
+</div>
                 </div>
             </div>
         </footer>
