@@ -255,4 +255,28 @@ npm run dev
 
 ---
 
+## 📸 Vista previa
+
+![Hero](/docs/images/hero-desktop.jpg)
+
+### Nuestro Equipo
+
+![Xabier](/docs/images/xabier.png) ![Alba](/docs/images/alba.png) ![Maria](/docs/images/maria.png) ![Adrian](/docs/images/adrian.png)
+
+> *Captura del hero y del equipo desde la sección "Sobre nosotros".*
+
+---
+
+## 📸 Preview
+
+![Hero](/docs/images/hero-desktop.jpg)
+
+### Our Team
+
+![Xabier](/docs/images/xabier.png) ![Alba](/docs/images/alba.png) ![Maria](/docs/images/maria.png) ![Adrian](/docs/images/adrian.png)
+
+> *Screenshot of the hero and the team section.*
+
+---
+
 If quieres que añada badges, instrucciones para hacer un deploy, o que el README quede más corto/visual, dímelo y lo adapto. 🎛️
