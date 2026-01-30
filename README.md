@@ -1,5 +1,7 @@
 # 🎬 THE OMEN – Horror Video Club
 
+<p align="right"><a href="README_EN.md"><button style="background:#b91c1c;color:#fff;border:none;padding:6px 12px;border-radius:6px;">English</button></a></p>
+
 **THE OMEN** es una aplicación web SPA (Single Page Application) creada con **React** y una estética inspirada en el terror, lo oculto y el cine ritual. Simula un archivo/colección de películas malditas con una UI oscura y cinematográfica.
 
 ---
