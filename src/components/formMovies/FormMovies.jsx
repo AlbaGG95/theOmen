@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import '../../index.css';
+import { useNavigate } from 'react-router-dom';
 
 const BASE_URL = 'http://localhost:3000/peliculas';
 
@@ -16,48 +17,37 @@ const FormPeliculas = () => {
   const [peliculas, setPeliculas] = useState([]);
   const [formData, setFormData] = useState(initialFormData);
   const [editId, setEditId] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchPeliculas = async () => {
       try {
         const respuesta = await axios.get(BASE_URL);
-        setPeliculas(respuesta.data);
+        const ordenadas = respuesta.data.sort((a, b) => b.id - a.id);
+        setPeliculas(ordenadas);
       } catch (error) {
         console.error('Error al cargar las películas:', error);
       }
     };
-
     fetchPeliculas();
   }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({
-      ...formData,
-      [name]: value
-    });
+    setFormData({ ...formData, [name]: value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (!formData.titulo || formData.anio === '' || formData.rating === '') {
       alert('Por favor, completa los campos obligatorios');
       return;
     }
 
-    const parsedAnio = Number(formData.anio);
-    const parsedRating = Number(formData.rating);
-
-    if (Number.isNaN(parsedAnio) || Number.isNaN(parsedRating)) {
-      alert('Año y rating deben ser números válidos');
-      return;
-    }
-
     const payload = {
       titulo: formData.titulo.trim(),
-      anio: parsedAnio,
-      rating: parsedRating,
+      anio: Number(formData.anio),
+      rating: Number(formData.rating),
       poster: formData.poster.trim() || '/posters/placeholder.jpg',
       sinopsis: formData.sinopsis.trim() || 'Sin sinopsis disponible.'
     };
@@ -89,15 +79,23 @@ const FormPeliculas = () => {
   };
 
   const handleDelete = async (id) => {
-    try {
-      await axios.delete(`${BASE_URL}/${id}`);
-      setPeliculas(peliculas.filter(p => p.id !== id));
-      if (editId === id) {
-        setFormData(initialFormData);
-        setEditId(null);
+    const confirmacion = window.confirm(
+      "Atención, el cambio que vas a ejecutar es irreversible. ¿Quieres continuar?"
+    );
+
+    if (confirmacion) {
+      try {
+        await axios.delete(`${BASE_URL}/${id}`);
+        setPeliculas(peliculas.filter(p => p.id !== id));
+        if (editId === id) {
+          setFormData(initialFormData);
+          setEditId(null);
+        }
+      } catch (error) {
+        console.error('Error al borrar la película:', error);
       }
-    } catch (error) {
-      console.error('Error al borrar la película:', error);
+    } else {
+      alert("Perdón, lo siento mucho, me he equivocado y no volverá a ocurrir");
     }
   };
 
@@ -109,9 +107,9 @@ const FormPeliculas = () => {
   return (
     <div className="w-full min-h-screen bg-black/80 backdrop-blur-md" style={{ backgroundImage: "url('/src/assets/home/hero-desktop.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}>
       <div className="absolute inset-0 bg-black/50 pointer-events-none" />
-      
+
       <div className="relative z-10 pt-20 pb-20 px-4 sm:px-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-center font-omen-title text-white mb-12 uppercase tracking-widest drop-shadow-lg">
+        <h1 className="text-4xl md:text-5xl font-bold text-center font-omen-title text-red-700 mb-12 uppercase tracking-widest drop-shadow-[0_2px_10px_rgba(185,28,28,0.5)]">
           {editId ? 'Editar' : 'Películas'}
         </h1>
 
@@ -119,118 +117,106 @@ const FormPeliculas = () => {
           <div className="max-w-2xl mx-auto">
             <form className="w-full bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-8 mb-8 shadow-2xl shadow-black/30 ring-1 ring-white/5 font-omen-body" onSubmit={handleSubmit}>
               <div className="space-y-6">
-              <div>
                 <input
                   type="text"
                   name="titulo"
                   value={formData.titulo}
                   onChange={handleChange}
                   placeholder="Título"
-                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-700/70 focus:border-red-700/70 transition"
+                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-red-600 font-semibold placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-700/70 transition"
                 />
-              </div>
-
-              <div>
                 <input
                   type="number"
                   name="anio"
                   value={formData.anio}
                   onChange={handleChange}
                   placeholder="Año"
-                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-700/70 focus:border-red-700/70 transition"
-                  min="1900"
-                  max={new Date().getFullYear()}
+                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-red-600 font-semibold placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-700/70 transition"
                 />
-              </div>
-
-              <div>
                 <input
                   type="number"
                   name="rating"
                   value={formData.rating}
                   onChange={handleChange}
                   placeholder="Rating (0-10)"
-                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-700/70 focus:border-red-700/70 transition"
-                  min="0"
-                  max="10"
-                  step="0.1"
+                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-red-600 font-semibold placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-700/70 transition"
                 />
-              </div>
-
-              <div>
                 <input
                   type="text"
                   name="poster"
                   value={formData.poster}
                   onChange={handleChange}
                   placeholder="URL del poster"
-                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-700/70 focus:border-red-700/70 transition"
+                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-red-600 font-semibold placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-700/70 transition"
                 />
-              </div>
-
-              <div>
                 <textarea
                   name="sinopsis"
                   value={formData.sinopsis}
                   onChange={handleChange}
                   placeholder="Sinopsis"
-                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-red-700/70 focus:border-red-700/70 transition min-h-[140px]"
+                  className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-red-600 font-semibold placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-700/70 transition min-h-[140px]"
                   rows="6"
                 />
               </div>
-            </div>
 
-            <div className="flex gap-4 mt-6 justify-center">
-              <button 
-                type="submit" 
-                className="px-8 py-2 bg-red-700 hover:bg-red-800 text-white font-bold uppercase tracking-wider rounded transition duration-300"
-              >
-                {editId ? 'Actualizar' : 'Guardar Película'}
-              </button>
-              {editId && (
-                <button 
-                  type="button" 
-                  onClick={handleCancel} 
-                  className="px-8 py-2 bg-gray-700 hover:bg-gray-800 text-white font-bold uppercase tracking-wider rounded transition duration-300"
+              <div className="flex flex-wrap gap-4 mt-8 justify-center">
+                <button
+                  type="submit"
+                  className="px-10 py-3 bg-black/60 border-2 border-amber-600/50 text-amber-500 font-black uppercase tracking-[0.2em] rounded-sm transition-all duration-500 hover:border-red-600 hover:text-red-500 hover:shadow-[0_0_20px_rgba(185,28,28,0.4)] hover:bg-black/80 relative group overflow-hidden"
                 >
-                  Cancelar
+                  <span className="relative z-10">
+                    {editId ? 'Invocar Cambios' : 'Sellar Película'}
+                  </span>
+                  <div className="absolute inset-0 bg-red-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </button>
-              )}
+
+                {editId && (
+                  <button
+                    type="button"
+                    onClick={() => navigate(`/movies/${editId}`)}
+                    className="px-8 py-3 bg-transparent border border-amber-700/30 text-amber-700/70 hover:text-amber-500 hover:border-amber-500 font-bold uppercase tracking-widest rounded-sm transition-all duration-300"
+                  >
+                    Ver Ficha
+                  </button>
+                )}
+
+                {editId && (
+                  <button
+                    type="button"
+                    onClick={handleCancel}
+                    className="px-8 py-3 bg-transparent text-gray-600 hover:text-red-800 font-bold uppercase tracking-widest transition-all duration-300"
+                  >
+                    [ Abortar ]
+                  </button>
+                )}
               </div>
             </form>
           </div>
 
           <div className="w-full max-w-[1600px] mx-auto px-4 md:px-6">
             <div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-4 gap-y-6">
-            {peliculas.length === 0 ? (
-              <p className="text-center text-gray-300 text-lg py-10">No hay películas registradas</p>
-            ) : (
-              peliculas.map(pelicula => (
-                <div key={pelicula.id} className="bg-black/30 hover:bg-black/40 backdrop-blur-md border border-white/10 rounded-lg p-3 shadow-lg hover:border-red-700/50 transition min-h-[120px]">
-                  <div className="flex flex-col justify-between h-full gap-4">
-                    <div>
-                      <h3 title={pelicula.titulo} className="text-red-600 font-semibold uppercase tracking-wide text-sm truncate">{pelicula.titulo}</h3>
-                      <p className="text-gray-300 text-xs mt-2"><span className="text-gray-400">Año:</span> {pelicula.anio}</p>
-                      <p className="text-gray-300 text-xs"><span className="text-gray-400">Rating:</span> {typeof pelicula.rating === 'number' ? pelicula.rating.toFixed(1) : pelicula.rating}</p>
-                    </div>
-                    <div className="flex gap-2 justify-end">
-                      <button 
-                        onClick={() => handleEdit(pelicula)} 
-                        className="px-2 py-1 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs uppercase rounded transition duration-300"
-                      >
-                        Editar
-                      </button>
-                      <button 
-                        onClick={() => handleDelete(pelicula.id)} 
-                        className="px-2 py-1 bg-red-700 hover:bg-red-800 text-white font-bold text-xs uppercase rounded transition duration-300"
-                      >
-                        Borrar
-                      </button>
-                    </div>
+              {peliculas.map(pelicula => (
+                <div key={pelicula.id} className="bg-black/30 hover:bg-black/40 backdrop-blur-md border border-white/10 rounded-lg p-3 shadow-lg hover:border-red-700/50 transition flex flex-col justify-between min-h-[140px]">
+                  <div>
+                    <h3 title={pelicula.titulo} className="text-red-600 font-bold uppercase tracking-wide text-xs truncate">{pelicula.titulo}</h3>
+                    <p className="text-gray-400 text-[10px] mt-1 italic">Año: {pelicula.anio} | Rating: {pelicula.rating}</p>
+                  </div>
+                  <div className="flex gap-2 mt-4">
+                    <button
+                      onClick={() => handleEdit(pelicula)}
+                      className="flex-1 px-2 py-1.5 border border-amber-700/50 bg-amber-900/20 hover:bg-amber-700/40 text-amber-600 font-bold text-[10px] uppercase rounded transition-all"
+                    >
+                      Modificar
+                    </button>
+                    <button
+                      onClick={() => handleDelete(pelicula.id)}
+                      className="flex-1 px-2 py-1.5 border border-red-900/50 bg-red-950/20 hover:bg-red-700 hover:text-white hover:shadow-[0_0_10px_rgba(185,28,28,0.8)] text-red-700 font-bold text-[10px] uppercase rounded transition-all"
+                    >
+                      Eliminar
+                    </button>
                   </div>
                 </div>
-              ))
-            )}
+              ))}
             </div>
           </div>
         </div>
@@ -240,6 +226,3 @@ const FormPeliculas = () => {
 };
 
 export default FormPeliculas;
-
-
-
