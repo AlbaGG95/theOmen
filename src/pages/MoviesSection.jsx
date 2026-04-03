@@ -33,8 +33,11 @@ const Peliculas = () => {
 
     if (cargando) {
         return (
-            <div className="min-h-screen bg-neutral-950 flex items-center justify-center">
-                <p className="text-white text-2xl">Cargando películas...</p>
+            <div className="min-h-screen bg-neutral-950 flex items-center justify-center px-4">
+                <div className="flex flex-col items-center gap-4 rounded-xl border border-red-900/40 bg-black/50 px-8 py-6 shadow-[0_0_30px_rgba(127,29,29,0.2)]">
+                    <span className="h-4 w-4 animate-pulse rounded-full bg-red-700 shadow-[0_0_16px_rgba(185,28,28,0.8)]"></span>
+                    <p className="text-white text-2xl tracking-wide">Cargando películas...</p>
+                </div>
             </div>
         );
     }
