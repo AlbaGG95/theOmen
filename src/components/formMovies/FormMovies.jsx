@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+﻿import { useEffect, useState } from 'react';
 import '../../index.css';
 import { useNavigate } from 'react-router-dom';
 import { createMovie, deleteMovie, getMovies, updateMovie } from '../../services/moviesApi';
+import heroBg from '../../assets/home/hero-desktop.jpg';
 
 const initialFormData = {
   titulo: '',
@@ -121,7 +122,7 @@ const FormPeliculas = () => {
     <div
       className="w-full min-h-screen bg-black/80 backdrop-blur-md"
       style={{
-        backgroundImage: "url('/src/assets/home/hero-desktop.jpg')",
+        backgroundImage: `url(${heroBg})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'
