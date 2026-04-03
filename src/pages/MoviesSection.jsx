@@ -1,10 +1,9 @@
 ﻿import { useState, useEffect } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
-import '..//index.css';
+import { Link } from 'react-router-dom';
+import '../index.css';
 import { getMovies } from '../services/moviesApi';
 
 const Peliculas = () => {
-    const navigate = useNavigate();
     const [peliculas, setPeliculas] = useState([]);
     const [paginaActual, setPaginaActual] = useState(1);
     const [cargando, setCargando] = useState(true);
@@ -174,3 +173,4 @@ const Peliculas = () => {
 };
 
 export default Peliculas;
+
