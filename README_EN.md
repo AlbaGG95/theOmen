@@ -1,14 +1,14 @@
-# 🎬 THE OMEN – Horror Video Club (English)
+# THE OMEN - Horror Video Club (English)
 
 **THE OMEN** is a single-page web app built with **React**, inspired by horror, occult aesthetics and cinematic rituals. It simulates a forbidden archive of cursed movies with a dark, cinematic interface.
 
 ---
 
-## 🎯 What it includes (Summary)
+## What it includes (Summary)
 
 - SPA built with **React.js** and **React Router DOM**
 - **Full CRUD** for movies (Create / Read / Update / Delete)
-- Fake API using **JSON Server** and **Axios**
+- Real backend consumption using **Spring Boot** and **Axios**
 - Pagination in the movies listing
 - Image fallback (placeholder) when posters fail to load
 - Form with basic validation (year and rating numeric)
@@ -16,11 +16,11 @@
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
 <div align="center">
 
-![Hero — Home](/src/assets/home/hero-desktop.jpg)
+![Hero - Home](/src/assets/home/hero-desktop.jpg)
 
 ![Our team](/img/theOmerNosotros.png)
 
@@ -28,60 +28,44 @@
 
 ---
 
-## 🚀 Important Routes
+## Important Routes
 
-- `/` → Home (hero and concept summary)
-- `/movies` → Movies section (paginated list)
-- `/movies/:id` → Movie detail
-- `/form` or `/add-movie` → Add/Edit movie form
-- `/aboutus` → About us
-- `/contact` → Contact
+- `/` -> Home (hero and concept summary)
+- `/movies` -> Movies section (paginated list)
+- `/movies/:id` -> Movie detail
+- `/form` or `/add-movie` -> Add/Edit movie form
+- `/aboutus` -> About us
+- `/contact` -> Contact
 
 > Note: The project uses `/form` as the main route for add/edit (there is also `/add-movie` alias).
 
 ---
 
-## 🧩 API (JSON Server)
+## API
 
-The local API uses `server/db.json` and exposes the main resource at:
+The frontend consumes a real **Spring Boot** backend. The base URL is configured through a Vite environment variable:
 
-- GET /peliculas → List
-- GET /peliculas/:id → Detail
-- POST /peliculas → Create
-- PUT /peliculas/:id → Update
-- DELETE /peliculas/:id → Delete
-
-Example structure:
-
-```json
-{
-  "peliculas": [
-    {
-      "id": 1,
-      "titulo": "The Silence of the Lambs",
-      "anio": 1991,
-      "rating": 8.6,
-      "poster": "/posters/1.jpg",
-      "sinopsis": "Short synopsis..."
-    }
-  ]
-}
+```env
+VITE_API_MOVIES_URL=http://localhost:8080/api/movies
 ```
+
+- The app expects the movies resource to be available at that URL.
+- Some legacy files from the previous fake-backend flow may still exist in the repository, but they are no longer the recommended way to run the project.
 
 ---
 
-## 🧰 Tech & Dependencies
+## Tech & Dependencies
 
 - React 19
 - React Router DOM
 - Tailwind CSS
 - Axios
-- JSON Server
+- Spring Boot (external backend consumed by the frontend)
 - Vite (dev server)
 
 ---
 
-## 🏁 How to run (development)
+## How to run (development)
 
 1. Install deps:
 
@@ -89,21 +73,22 @@ Example structure:
 npm install
 ```
 
-2. Run the fake API in one terminal:
+2. Make sure the real Spring Boot backend is running and available at:
 
-```bash
-npm run api
-# → listening at http://localhost:3000
+```env
+VITE_API_MOVIES_URL=http://localhost:8080/api/movies
 ```
 
-3. Run the app in another terminal:
+3. Verify or create your local `.env` file at the project root with that variable.
+
+4. Run the app in a terminal:
 
 ```bash
 npm run dev
-# → default http://127.0.0.1:5173
+# -> default http://127.0.0.1:5173
 ```
 
-4. Open your browser at `http://localhost:5173`.
+5. Open your browser at `http://localhost:5173`.
 
 > For production:
 >
@@ -114,7 +99,7 @@ npm run dev
 
 ---
 
-## ✅ Highlights
+## Highlights
 
 - Pagination (10 movies/page)
 - Detail pages for each movie
@@ -124,7 +109,7 @@ npm run dev
 
 ---
 
-## 📄 License & Contributions
+## License & Contributions
 
 - License: MIT (see `LICENSE`)
 - Contributions: Open an issue or PR describing changes/bugs.
@@ -132,4 +117,4 @@ npm run dev
 
 ---
 
-If you need badges, deployment instructions, or want a shorter/more visual README, tell me and I’ll adapt it. 🎛️
+If you need badges, deployment instructions, or want a shorter or more visual README, tell me and I will adapt it.

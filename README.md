@@ -1,18 +1,18 @@
-# 🎬 THE OMEN – Horror Video Club
+# THE OMEN - Horror Video Club
 
 <p align="right"><a href="README_EN.md"><button style="background:#b91c1c;color:#fff;border:none;padding:6px 12px;border-radius:6px;">English</button></a></p>
 
-**THE OMEN** es una aplicación web SPA (Single Page Application) creada con **React** y una estética inspirada en el terror, lo oculto y el cine ritual. Simula un archivo/colección de películas malditas con una UI oscura y cinematográfica.
+**THE OMEN** es una aplicacion web SPA (Single Page Application) creada con **React** y una estetica inspirada en el terror, lo oculto y el cine ritual. Simula un archivo/coleccion de peliculas malditas con una UI oscura y cinematografica.
 
 ---
 
-## 📸 Capturas
+## Capturas
 
-A continuación, algunas capturas representativas del proyecto:
+A continuacion, algunas capturas representativas del proyecto:
 
 <div align="center">
 
-![theOmer — Home](img/theOmer.png)
+![theOmer - Home](img/theOmer.png)
 
 ![Nuestro equipo](/img/theOmerNosotros.png)
 
@@ -20,74 +20,57 @@ A continuación, algunas capturas representativas del proyecto:
 
 ---
 
-## 🎯 Qué incluye
+## Que incluye
 
 - SPA con **React.js** y **React Router DOM**
-- **CRUD completo** sobre películas (Crear / Leer / Editar / Borrar)
-- Consumo de API fake con **JSON Server** y **Axios**
-- **Paginación** en la lista de películas
-- Manejo de imágenes con **placeholder** cuando falla la carga
-- Formulario con validaciones básicas (año y rating numéricos)
-- Diseño **responsive** con **Tailwind CSS**
+- **CRUD completo** sobre peliculas (Crear / Leer / Editar / Borrar)
+- Consumo de backend real con **Spring Boot** y **Axios**
+- **Paginacion** en la lista de peliculas
+- Manejo de imagenes con **placeholder** cuando falla la carga
+- Formulario con validaciones basicas (anio y rating numericos)
+- Disenio **responsive** con **Tailwind CSS**
 
 ---
 
-## 🚀 Rutas importantes
+## Rutas importantes
 
-- `/` → Home (hero y resumen)
-- `/movies` → Sección de películas (lista con paginación)
-- `/movies/:id` → Detalle de película
-- `/form` o `/add-movie` → Formulario para crear/editar películas
-- `/aboutus` → Sobre nosotros
-- `/contact` → Contacto
+- `/` -> Home (hero y resumen)
+- `/movies` -> Seccion de peliculas (lista con paginacion)
+- `/movies/:id` -> Detalle de pelicula
+- `/form` o `/add-movie` -> Formulario para crear/editar peliculas
+- `/aboutus` -> Sobre nosotros
+- `/contact` -> Contacto
 
-> Nota: El proyecto utiliza `/form` como ruta principal para crear/editar películas (el código también incluye `/add-movie` como alias).
+> Nota: El proyecto utiliza `/form` como ruta principal para crear/editar peliculas (el codigo tambien incluye `/add-movie` como alias).
 
 ---
 
-## 🧩 API (JSON Server)
+## API
 
-La API local utiliza el archivo `server/db.json` y expone el recurso principal en:
+El frontend consume un backend real en **Spring Boot**. La URL base se configura mediante variable de entorno de Vite:
 
-- GET /peliculas → Lista de películas
-- GET /peliculas/:id → Detalle
-- POST /peliculas → Crear
-- PUT /peliculas/:id → Actualizar
-- DELETE /peliculas/:id → Borrar
-
-Ejemplo de estructura (fragmento):
-
-```json
-{
-  "peliculas": [
-    {
-      "id": 1,
-      "titulo": "El silencio de los corderos",
-      "anio": 1991,
-      "rating": 8.6,
-      "poster": "/posters/1.jpg",
-      "sinopsis": "Resumen..."
-    }
-  ]
-}
+```env
+VITE_API_MOVIES_URL=http://localhost:8080/api/movies
 ```
 
-- Las imágenes de póster pueden ser rutas locales (`/posters/*.jpg`) o URLs externas. Si la imagen falla, se muestra un `placeholder`.
+- La aplicacion espera el recurso de peliculas accesible en esa URL.
+- Las imagenes de poster pueden ser rutas locales (`/posters/*.jpg`) o URLs externas. Si la imagen falla, se muestra un `placeholder`.
+- Siguen existiendo algunos archivos legacy del flujo anterior con backend fake, pero ya no son la forma recomendada de ejecutar el proyecto.
 
 ---
 
-## 🧰 Tecnologías y dependencias
+## Tecnologias y dependencias
 
 - React 19
 - React Router DOM
 - Tailwind CSS
 - Axios
-- JSON Server
+- Spring Boot (backend externo consumido por el frontend)
 - Vite (dev server)
 
 ---
 
-## 🏁 Cómo ejecutar el proyecto (desarrollo)
+## Como ejecutar el proyecto (desarrollo)
 
 1. Instala dependencias:
 
@@ -95,23 +78,24 @@ Ejemplo de estructura (fragmento):
 npm install
 ```
 
-2. En una terminal ejecuta la API local (JSON Server):
+2. Asegurate de que el backend real de Spring Boot este arrancado y disponible en:
 
-```bash
-npm run api
-# → escucha en http://localhost:3000
+```env
+VITE_API_MOVIES_URL=http://localhost:8080/api/movies
 ```
 
-3. En otra terminal ejecuta la aplicación (Vite):
+3. Verifica o crea tu archivo `.env` en la raiz del proyecto con esa variable.
+
+4. En una terminal ejecuta la aplicacion (Vite):
 
 ```bash
 npm run dev
-# → por defecto en http://127.0.0.1:5173
+# -> por defecto en http://127.0.0.1:5173
 ```
 
-4. Abre el navegador y navega a `http://localhost:5173`.
+5. Abre el navegador y navega a `http://localhost:5173`.
 
-> Para producción:
+> Para produccion:
 >
 > ```bash
 > npm run build
@@ -120,27 +104,28 @@ npm run dev
 
 ---
 
-## ✅ Funcionalidades destacadas
+## Funcionalidades destacadas
 
-- Paginación en `/movies` (10 películas por página)
+- Paginacion en `/movies` (10 peliculas por pagina)
 - Enlaces a detalle por cada tarjeta (`/movies/:id`)
-- Formulario con creación y edición (edición en línea, con botones Editar / Borrar)
-- Validaciones sencillas en frontend (campo año y rating numéricos)
-- Manejo de errores en carga de datos e imágenes
+- Formulario con creacion y edicion (edicion en linea, con botones Editar / Borrar)
+- Validaciones sencillas en frontend (campo anio y rating numericos)
+- Manejo de errores en carga de datos e imagenes
 
 ---
 
-## 🧪 Nota sobre el entorno
+## Nota sobre el entorno
 
-- Asegúrate de que la API (`npm run api`) esté corriendo antes de abrir la app; la UI espera `http://localhost:3000/peliculas`.
-- Si quieres ejecutar API y app en una sola terminal considera instalar `concurrently` y añadir un script, pero actualmente se ejecutan en terminales separadas.
+- Asegurate de que el backend real de Spring Boot este corriendo antes de abrir la app.
+- La variable esperada por el frontend es `VITE_API_MOVIES_URL=http://localhost:8080/api/movies`.
+- Si conservas archivos del flujo fake anterior, consideralos solo como legado y no como la forma principal de ejecucion.
 
 ---
 
-## 📄 License & Contribuciones
+## License & Contribuciones
 
 - Licencia: MIT (revisar `LICENSE`)
 - Contribuciones: Abre un issue o PR describiendo cambios/errores.
-- Nota: Este proyecto se finalizó y se corrigieron errores con la ayuda de IA (asistente). La IA asistió en la redacción y en correcciones de código y documentación.
+- Nota: Este proyecto se finalizo y se corrigieron errores con la ayuda de IA (asistente). La IA asistio en la redaccion y en correcciones de codigo y documentacion.
 
 ---
