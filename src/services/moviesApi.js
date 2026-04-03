@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const BASE_URL = 'http://localhost:8080/api/movies';
+const BASE_URL = import.meta.env.VITE_API_MOVIES_URL;
 
 export const getMovies = () => axios.get(BASE_URL);
 
