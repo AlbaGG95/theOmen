@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
 import '../../index.css';
 import { useNavigate } from 'react-router-dom';
-
-const BASE_URL = 'http://localhost:8080/api/movies';
+import { createMovie, deleteMovie, getMovies, updateMovie } from '../../services/moviesApi';
 
 const initialFormData = {
   titulo: '',
@@ -22,7 +20,7 @@ const FormPeliculas = () => {
   useEffect(() => {
     const fetchPeliculas = async () => {
       try {
-        const respuesta = await axios.get(BASE_URL);
+        const respuesta = await getMovies();
         const ordenadas = respuesta.data.sort((a, b) => b.id - a.id);
         setPeliculas(ordenadas);
       } catch (error) {
@@ -54,11 +52,11 @@ const FormPeliculas = () => {
 
     try {
       if (editId) {
-        const respuesta = await axios.put(`${BASE_URL}/${editId}`, payload);
+        const respuesta = await updateMovie(editId, payload);
         setPeliculas(peliculas.map(p => (p.id === editId ? respuesta.data : p)));
         setEditId(null);
       } else {
-        const respuesta = await axios.post(BASE_URL, payload);
+        const respuesta = await createMovie(payload);
         setPeliculas((prev) => [respuesta.data, ...prev]);
       }
       setFormData(initialFormData);
@@ -85,7 +83,7 @@ const FormPeliculas = () => {
 
     if (confirmacion) {
       try {
-        await axios.delete(`${BASE_URL}/${id}`);
+        await deleteMovie(id);
         setPeliculas(peliculas.filter(p => p.id !== id));
         if (editId === id) {
           setFormData(initialFormData);

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
-import axios from 'axios';
 import '..//index.css';
+import { getMovies } from '../services/moviesApi';
 
 const Peliculas = () => {
     const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Peliculas = () => {
         const obtenerPeliculas = async () => {
             try {
                 setCargando(true);
-                const respuesta = await axios.get("http://localhost:8080/api/movies");
+                const respuesta = await getMovies();
                 setPeliculas(respuesta.data);
                 setError(null);
             } catch (err) {

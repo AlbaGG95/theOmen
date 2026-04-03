@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { getMovies } from "../services/moviesApi";
 
 export default function CursedCarousel() {
     const [index, setIndex] = useState(0);
@@ -10,7 +10,7 @@ export default function CursedCarousel() {
     useEffect(() => {
         const obtenerPeliculas = async () => {
             try {
-                const respuesta = await axios.get("http://localhost:8080/api/movies");
+                const respuesta = await getMovies();
                 const peliculasAleatorias = respuesta.data
                     .sort(() => Math.random() - 0.5)
                     .slice(0, 5);
