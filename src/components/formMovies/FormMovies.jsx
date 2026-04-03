@@ -27,6 +27,7 @@ const FormPeliculas = () => {
         console.error('Error al cargar las películas:', error);
       }
     };
+
     fetchPeliculas();
   }, []);
 
@@ -37,15 +38,29 @@ const FormPeliculas = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!formData.titulo || formData.anio === '' || formData.rating === '') {
+    const titulo = formData.titulo.trim();
+    const anio = Number(formData.anio);
+    const rating = Number(formData.rating);
+
+    if (!titulo || formData.anio === '' || formData.rating === '') {
       alert('Por favor, completa los campos obligatorios');
       return;
     }
 
+    if (Number.isNaN(anio) || anio <= 1800) {
+      alert('El año debe ser un número válido mayor que 1800');
+      return;
+    }
+
+    if (Number.isNaN(rating) || rating < 0 || rating > 10) {
+      alert('El rating debe estar entre 0 y 10');
+      return;
+    }
+
     const payload = {
-      titulo: formData.titulo.trim(),
-      anio: Number(formData.anio),
-      rating: Number(formData.rating),
+      titulo,
+      anio,
+      rating,
       poster: formData.poster.trim() || '/posters/placeholder.jpg',
       sinopsis: formData.sinopsis.trim() || 'Sin sinopsis disponible.'
     };
@@ -53,7 +68,7 @@ const FormPeliculas = () => {
     try {
       if (editId) {
         const respuesta = await updateMovie(editId, payload);
-        setPeliculas(peliculas.map(p => (p.id === editId ? respuesta.data : p)));
+        setPeliculas(peliculas.map((p) => (p.id === editId ? respuesta.data : p)));
         setEditId(null);
       } else {
         const respuesta = await createMovie(payload);
@@ -78,13 +93,13 @@ const FormPeliculas = () => {
 
   const handleDelete = async (id) => {
     const confirmacion = window.confirm(
-      "Atención, el cambio que vas a ejecutar es irreversible. ¿Quieres continuar?"
+      'Atención: este cambio es irreversible. ¿Quieres continuar?'
     );
 
     if (confirmacion) {
       try {
         await deleteMovie(id);
-        setPeliculas(peliculas.filter(p => p.id !== id));
+        setPeliculas(peliculas.filter((p) => p.id !== id));
         if (editId === id) {
           setFormData(initialFormData);
           setEditId(null);
@@ -93,7 +108,7 @@ const FormPeliculas = () => {
         console.error('Error al borrar la película:', error);
       }
     } else {
-      alert("Perdón, lo siento mucho, me he equivocado y no volverá a ocurrir");
+      alert('El borrado de la película ha sido cancelado.');
     }
   };
 
@@ -103,7 +118,15 @@ const FormPeliculas = () => {
   };
 
   return (
-    <div className="w-full min-h-screen bg-black/80 backdrop-blur-md" style={{ backgroundImage: "url('/src/assets/home/hero-desktop.jpg')", backgroundSize: 'cover', backgroundPosition: 'center', backgroundAttachment: 'fixed' }}>
+    <div
+      className="w-full min-h-screen bg-black/80 backdrop-blur-md"
+      style={{
+        backgroundImage: "url('/src/assets/home/hero-desktop.jpg')",
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+    >
       <div className="absolute inset-0 bg-black/50 pointer-events-none" />
 
       <div className="relative z-10 pt-20 pb-20 px-4 sm:px-8">
@@ -113,7 +136,10 @@ const FormPeliculas = () => {
 
         <div className="mx-auto">
           <div className="max-w-2xl mx-auto">
-            <form className="w-full bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-8 mb-8 shadow-2xl shadow-black/30 ring-1 ring-white/5 font-omen-body" onSubmit={handleSubmit}>
+            <form
+              className="w-full bg-black/40 backdrop-blur-md border border-white/10 rounded-xl p-8 mb-8 shadow-2xl shadow-black/30 ring-1 ring-white/5 font-omen-body"
+              onSubmit={handleSubmit}
+            >
               <div className="space-y-6">
                 <input
                   type="text"
@@ -144,7 +170,7 @@ const FormPeliculas = () => {
                   name="poster"
                   value={formData.poster}
                   onChange={handleChange}
-                  placeholder="URL del poster"
+                  placeholder="URL del póster"
                   className="w-full px-4 py-3 bg-black/30 border border-white/10 rounded text-red-600 font-semibold placeholder-gray-600 focus:outline-none focus:ring-2 focus:ring-red-700/70 transition"
                 />
                 <textarea
@@ -163,7 +189,7 @@ const FormPeliculas = () => {
                   className="px-10 py-3 bg-black/60 border-2 border-amber-600/50 text-amber-500 font-black uppercase tracking-[0.2em] rounded-sm transition-all duration-500 hover:border-red-600 hover:text-red-500 hover:shadow-[0_0_20px_rgba(185,28,28,0.4)] hover:bg-black/80 relative group overflow-hidden"
                 >
                   <span className="relative z-10">
-                    {editId ? 'Invocar Cambios' : 'Sellar Película'}
+                    {editId ? 'Guardar cambios' : 'Guardar película'}
                   </span>
                   <div className="absolute inset-0 bg-red-900/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
                 </button>
@@ -174,7 +200,7 @@ const FormPeliculas = () => {
                     onClick={() => navigate(`/movies/${editId}`)}
                     className="px-8 py-3 bg-transparent border border-amber-700/30 text-amber-700/70 hover:text-amber-500 hover:border-amber-500 font-bold uppercase tracking-widest rounded-sm transition-all duration-300"
                   >
-                    Ver Ficha
+                    Ver ficha
                   </button>
                 )}
 
@@ -184,7 +210,7 @@ const FormPeliculas = () => {
                     onClick={handleCancel}
                     className="px-8 py-3 bg-transparent text-gray-600 hover:text-red-800 font-bold uppercase tracking-widest transition-all duration-300"
                   >
-                    [ Abortar ]
+                    Cancelar
                   </button>
                 )}
               </div>
@@ -193,11 +219,18 @@ const FormPeliculas = () => {
 
           <div className="w-full max-w-[1600px] mx-auto px-4 md:px-6">
             <div className="grid w-full grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 gap-x-4 gap-y-6">
-              {peliculas.map(pelicula => (
-                <div key={pelicula.id} className="bg-black/30 hover:bg-black/40 backdrop-blur-md border border-white/10 rounded-lg p-3 shadow-lg hover:border-red-700/50 transition flex flex-col justify-between min-h-[140px]">
+              {peliculas.map((pelicula) => (
+                <div
+                  key={pelicula.id}
+                  className="bg-black/30 hover:bg-black/40 backdrop-blur-md border border-white/10 rounded-lg p-3 shadow-lg hover:border-red-700/50 transition flex flex-col justify-between min-h-[140px]"
+                >
                   <div>
-                    <h3 title={pelicula.titulo} className="text-red-600 font-bold uppercase tracking-wide text-xs truncate">{pelicula.titulo}</h3>
-                    <p className="text-gray-400 text-[10px] mt-1 italic">Año: {pelicula.anio} | Rating: {pelicula.rating}</p>
+                    <h3 title={pelicula.titulo} className="text-red-600 font-bold uppercase tracking-wide text-xs truncate">
+                      {pelicula.titulo}
+                    </h3>
+                    <p className="text-gray-400 text-[10px] mt-1 italic">
+                      Año: {pelicula.anio} | Rating: {pelicula.rating}
+                    </p>
                   </div>
                   <div className="flex gap-2 mt-4">
                     <button
