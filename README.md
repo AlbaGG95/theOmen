@@ -2,10 +2,15 @@
 
 <p align="right"><a href="README_EN.md"><button style="background:#b91c1c;color:#fff;border:none;padding:6px 12px;border-radius:6px;">English</button></a></p>
 
-**THE OMEN** es una aplicacion web SPA (Single Page Application) creada con **React** y una estetica inspirada en el terror, lo oculto y el cine ritual. Simula un archivo/coleccion de peliculas malditas con una UI oscura y cinematografica.
+Aplicación web tipo videoclub desarrollada con React y Spring Boot, que permite gestionar un catálogo de películas mediante un CRUD completo conectado a un backend real.
 
 ---
+## Estructura del proyecto
 
+- src/components → componentes reutilizables
+- src/pages → vistas principales
+- src/services → capa de acceso a la API
+---
 ## Capturas
 
 A continuacion, algunas capturas representativas del proyecto:
