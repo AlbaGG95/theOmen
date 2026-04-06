@@ -131,7 +131,7 @@ const FormPeliculas = () => {
       <div className="absolute inset-0 bg-black/50 pointer-events-none" />
 
       <div className="relative z-10 pt-20 pb-20 px-4 sm:px-8">
-        <h1 className="text-4xl md:text-5xl font-bold text-center font-omen-title text-red-700 mb-12 uppercase tracking-widest drop-shadow-[0_2px_10px_rgba(185,28,28,0.5)]">
+        <h1 className="text-4xl md:text-5xl font-bold text-center font-omen-title text-white mb-12 uppercase tracking-widest drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]">
           {editId ? 'Editar' : 'Películas'}
         </h1>
 

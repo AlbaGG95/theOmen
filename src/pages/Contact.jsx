@@ -14,8 +14,8 @@ function Contact() {
             <div className="relative z-10 max-w-6xl mx-auto">
 
                 <h1
-                    className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-red-500 mb-8 md:mb-12 tracking-wider uppercase px-6 py-3 w-fit mx-auto"
-                    style={{ textShadow: "0 2px 15px rgba(255,0,0,0.5)" }}
+                    className="text-3xl md:text-4xl lg:text-5xl font-bold text-center text-white mb-8 md:mb-12 tracking-wider uppercase px-6 py-3 w-fit mx-auto"
+                    style={{ textShadow: "0 2px 15px rgba(0,0,0,0.7)" }}
                 >
                     Contacto y Localización
                 </h1>

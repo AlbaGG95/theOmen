@@ -75,7 +75,7 @@ export default function MovieDetail() {
 
                     <div className="md:col-span-2 space-y-6">
                         <div>
-                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-red-600 mb-2 tracking-wider uppercase">
+                            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-2 tracking-wider uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)]">
                                 {movie.titulo}
                             </h1>
                             <p className="text-gray-400 text-lg">{movie.anio}</p>

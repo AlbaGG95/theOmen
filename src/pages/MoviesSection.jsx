@@ -77,7 +77,7 @@ const Peliculas = () => {
         >
             <div className="absolute inset-0 bg-black/70 -z-10"></div>
             <div className="relative z-10 max-w-7xl mx-auto">
-                <h1 className="text-4xl md:text-5xl font-bold text-center text-red-700 mb-2 tracking-widest uppercase drop-shadow-[0_2px_10px_rgba(185,28,28,0.5)] font-omen-title">
+                <h1 className="text-4xl md:text-5xl font-bold text-center text-white mb-2 tracking-widest uppercase drop-shadow-[0_2px_10px_rgba(0,0,0,0.7)] font-omen-title">
                     Sección de películas
                 </h1>
 
