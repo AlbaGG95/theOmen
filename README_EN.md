@@ -43,13 +43,14 @@
 
 ## API
 
-The frontend consumes a real **Spring Boot** backend. The base URL is configured through a Vite environment variable:
+The frontend consumes a real **Spring Boot** backend. In development, the recommended setup is to use the Vite proxy:
 
 ```env
-VITE_API_MOVIES_URL=http://localhost:8080/api/movies
+VITE_API_MOVIES_URL=/api/movies
 ```
 
-- The app expects the movies resource to be available at that URL.
+- Vite forwards `/api/*` to `http://localhost:8080`, so the backend should be running on that port.
+- This avoids CORS issues while developing from `http://localhost:5173`.
 - Some legacy files from the previous fake-backend flow may still exist in the repository, but they are no longer the recommended way to run the project.
 
 ---
@@ -73,10 +74,10 @@ VITE_API_MOVIES_URL=http://localhost:8080/api/movies
 npm install
 ```
 
-2. Make sure the real Spring Boot backend is running and available at:
+2. Make sure the real Spring Boot backend is running on `http://localhost:8080`.
 
 ```env
-VITE_API_MOVIES_URL=http://localhost:8080/api/movies
+VITE_API_MOVIES_URL=/api/movies
 ```
 
 3. Verify or create your local `.env` file at the project root with that variable.
@@ -118,3 +119,5 @@ npm run dev
 ---
 
 If you need badges, deployment instructions, or want a shorter or more visual README, tell me and I will adapt it.
+
+

@@ -47,13 +47,14 @@ A continuacion, algunas capturas representativas del proyecto:
 
 ## API
 
-El frontend consume un backend real en **Spring Boot**. La URL base se configura mediante variable de entorno de Vite:
+El frontend consume un backend real en **Spring Boot**. En desarrollo, la forma recomendada es usar el proxy de Vite:
 
 ```env
-VITE_API_MOVIES_URL=http://localhost:8080/api/movies
+VITE_API_MOVIES_URL=/api/movies
 ```
 
-- La aplicacion espera el recurso de peliculas accesible en esa URL.
+- Vite reenvia `/api/*` a `http://localhost:8080`, asi que el backend debe estar levantado en ese puerto.
+- Esto evita errores de CORS al desarrollar desde `http://localhost:5173`.
 - Las imagenes de poster pueden ser rutas locales (`/posters/*.jpg`) o URLs externas. Si la imagen falla, se muestra un `placeholder`.
 - Siguen existiendo algunos archivos legacy del flujo anterior con backend fake, pero ya no son la forma recomendada de ejecutar el proyecto.
 
@@ -78,10 +79,10 @@ VITE_API_MOVIES_URL=http://localhost:8080/api/movies
 npm install
 ```
 
-2. Asegurate de que el backend real de Spring Boot este arrancado y disponible en:
+2. Asegurate de que el backend real de Spring Boot este arrancado en `http://localhost:8080`.
 
 ```env
-VITE_API_MOVIES_URL=http://localhost:8080/api/movies
+VITE_API_MOVIES_URL=/api/movies
 ```
 
 3. Verifica o crea tu archivo `.env` en la raiz del proyecto con esa variable.
@@ -116,8 +117,8 @@ npm run dev
 
 ## Nota sobre el entorno
 
-- Asegurate de que el backend real de Spring Boot este corriendo antes de abrir la app.
-- La variable esperada por el frontend es `VITE_API_MOVIES_URL=http://localhost:8080/api/movies`.
+- Asegurate de que el backend real de Spring Boot este corriendo en `http://localhost:8080` antes de abrir la app.
+- La variable esperada por el frontend es `VITE_API_MOVIES_URL=/api/movies`.
 - Si conservas archivos del flujo fake anterior, consideralos solo como legado y no como la forma principal de ejecucion.
 
 ---
@@ -129,3 +130,5 @@ npm run dev
 - Nota: Este proyecto se finalizo y se corrigieron errores con la ayuda de IA (asistente). La IA asistio en la redaccion y en correcciones de codigo y documentacion.
 
 ---
+
+
