@@ -4,7 +4,7 @@
 
 ---
 
-## What it includes (Summary)
+## What it includes
 
 - SPA built with **React.js** and **React Router DOM**
 - **Full CRUD** for movies (Create / Read / Update / Delete)
@@ -37,7 +37,7 @@
 - `/aboutus` -> About us
 - `/contact` -> Contact
 
-> Note: The project uses `/form` as the main route for add/edit (there is also `/add-movie` alias).
+> Note: The project uses `/form` as the main route for add/edit and also keeps `/add-movie` as an alias.
 
 ---
 
@@ -68,28 +68,34 @@ VITE_API_MOVIES_URL=/api/movies
 
 ## How to run (development)
 
-1. Install deps:
+1. Install dependencies:
 
 ```bash
 npm install
 ```
 
-2. Make sure the real Spring Boot backend is running on `http://localhost:8080`.
+2. Create your local `.env` file from the example:
+
+```bash
+cp .env.example .env
+```
+
+3. Configure the value you want to use in your environment:
 
 ```env
 VITE_API_MOVIES_URL=/api/movies
 ```
 
-3. Verify or create your local `.env` file at the project root with that variable.
+4. Make sure your Spring Boot backend is running on `http://localhost:8080`.
 
-4. Run the app in a terminal:
+5. Start the app:
 
 ```bash
 npm run dev
 # -> default http://127.0.0.1:5173
 ```
 
-5. Open your browser at `http://localhost:5173`.
+6. Open your browser at `http://localhost:5173`.
 
 > For production:
 >
@@ -100,24 +106,39 @@ npm run dev
 
 ---
 
+## Private Configuration
+
+- This repository does **not include** MySQL credentials, passwords, tokens, or private backend configuration.
+- The `.env` file is local, ignored by Git, and each user must fill in their own values.
+- If your backend uses **Spring Boot + MySQL**, the JDBC URL, username, and password must be configured in the backend project, not in this frontend repository.
+- Never commit files such as `.env`, `application.properties`, `application.yml`, `.sql` dumps, private keys, or backups containing real data.
+- `.env.example` should only contain safe example values.
+
+---
+
 ## Highlights
 
-- Pagination (10 movies/page)
-- Detail pages for each movie
-- Inline editing and deletion from the form listing
+- Pagination (10 movies per page)
+- Detail pages for each movie card (`/movies/:id`)
+- Form with create and edit flows
 - Basic frontend validation
-- Error handling for data & images
+- Error handling for API requests and images
+
+---
+
+## Environment Notes
+
+- Make sure the real Spring Boot backend is running on `http://localhost:8080` before opening the app.
+- The recommended development value is `VITE_API_MOVIES_URL=/api/movies`.
+- If you do not want to use the Vite proxy, you can point `VITE_API_MOVIES_URL` to a full backend URL, but then you must handle CORS on the server.
+- Legacy fake-backend files may still exist in the repo for reference, but they are not the primary runtime path anymore.
 
 ---
 
 ## License & Contributions
 
 - License: MIT (see `LICENSE`)
-- Contributions: Open an issue or PR describing changes/bugs.
-- Note: This project was completed and corrected with the assistance of AI (assistant). The AI assisted with writing and fixing code and documentation.
+- Contributions: Open an issue or PR describing changes or bugs.
+- Note: This project was completed and corrected with the assistance of AI. The AI helped with writing, code fixes, and documentation.
 
 ---
-
-If you need badges, deployment instructions, or want a shorter or more visual README, tell me and I will adapt it.
-
-

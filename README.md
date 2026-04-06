@@ -79,22 +79,28 @@ VITE_API_MOVIES_URL=/api/movies
 npm install
 ```
 
-2. Asegurate de que el backend real de Spring Boot este arrancado en `http://localhost:8080`.
+2. Crea tu archivo local `.env` a partir del ejemplo:
+
+```bash
+cp .env.example .env
+```
+
+3. Configura en `.env` la URL que vas a usar en tu entorno:
 
 ```env
 VITE_API_MOVIES_URL=/api/movies
 ```
 
-3. Verifica o crea tu archivo `.env` en la raiz del proyecto con esa variable.
+4. Asegurate de que tu backend real de Spring Boot este arrancado en `http://localhost:8080`.
 
-4. En una terminal ejecuta la aplicacion (Vite):
+5. En una terminal ejecuta la aplicacion:
 
 ```bash
 npm run dev
 # -> por defecto en http://127.0.0.1:5173
 ```
 
-5. Abre el navegador y navega a `http://localhost:5173`.
+6. Abre el navegador y navega a `http://localhost:5173`.
 
 > Para produccion:
 >
@@ -102,6 +108,16 @@ npm run dev
 > npm run build
 > npm run preview
 > ```
+
+---
+
+## Configuracion privada
+
+- Este repositorio **no incluye** credenciales de MySQL, contrasenas, tokens ni configuracion privada del backend.
+- El archivo `.env` es local, esta ignorado por Git y cada usuario debe poner ahi su propia configuracion.
+- Si tu backend usa **Spring Boot + MySQL**, la URL JDBC, usuario y password deben configurarse en el proyecto backend, no en este frontend.
+- No subas al repositorio archivos como `.env`, `application.properties`, `application.yml`, dumps `.sql`, claves privadas o backups con datos reales.
+- `.env.example` solo debe contener valores de ejemplo seguros.
 
 ---
 
@@ -118,7 +134,8 @@ npm run dev
 ## Nota sobre el entorno
 
 - Asegurate de que el backend real de Spring Boot este corriendo en `http://localhost:8080` antes de abrir la app.
-- La variable esperada por el frontend es `VITE_API_MOVIES_URL=/api/movies`.
+- La variable recomendada para desarrollo es `VITE_API_MOVIES_URL=/api/movies`.
+- Si prefieres no usar el proxy de Vite, puedes apuntar `VITE_API_MOVIES_URL` a una URL completa de tu backend, pero entonces debes resolver CORS en el servidor.
 - Si conservas archivos del flujo fake anterior, consideralos solo como legado y no como la forma principal de ejecucion.
 
 ---
@@ -126,9 +143,7 @@ npm run dev
 ## License & Contribuciones
 
 - Licencia: MIT (revisar `LICENSE`)
-- Contribuciones: Abre un issue o PR describiendo cambios/errores.
+- Contribuciones: Abre un issue o PR describiendo cambios o errores.
 - Nota: Este proyecto se finalizo y se corrigieron errores con la ayuda de IA (asistente). La IA asistio en la redaccion y en correcciones de codigo y documentacion.
 
 ---
-
-
