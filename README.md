@@ -29,7 +29,14 @@ A continuacion, algunas capturas representativas del proyecto:
 - Manejo de imagenes con **placeholder** cuando falla la carga
 - Formulario con validaciones basicas (anio y rating numericos)
 - Disenio **responsive** con **Tailwind CSS**
+---
+## Funcionalidades
 
+- Visualización del catálogo de películas (GET)
+- Visualización del detalle de una película (GET by id)
+- Creación de nuevas películas (POST)
+- Edición de películas existentes (PUT)
+- Eliminación de películas (DELETE)
 ---
 
 ## Rutas importantes
@@ -68,7 +75,14 @@ VITE_API_MOVIES_URL=/api/movies
 - Axios
 - Spring Boot (backend externo consumido por el frontend)
 - Vite (dev server)
+---
+## Arquitectura
 
+El frontend está desacoplado del backend y consume los endpoints mediante Axios.
+
+Las llamadas HTTP están centralizadas en un servicio (`moviesApi.js`), evitando llamadas directas desde los componentes y facilitando el mantenimiento del código.
+
+El backend está desarrollado en Spring Boot y expone una API REST que gestiona el CRUD completo de películas.
 ---
 
 ## Como ejecutar el proyecto (desarrollo)
@@ -139,7 +153,13 @@ npm run dev
 - Si conservas archivos del flujo fake anterior, consideralos solo como legado y no como la forma principal de ejecucion.
 
 ---
+## Notas técnicas
 
+- Se ha eliminado el uso de json-server para trabajar con un backend real en Spring Boot.
+- Se ha utilizado una variable de entorno (`VITE_API_MOVIES_URL`) para desacoplar la URL de la API.
+- Se han implementado estados de carga y manejo de errores en el frontend.
+- Se han aplicado mejoras de clean code eliminando código no utilizado y centralizando la lógica de acceso a datos.
+---
 ## License & Contribuciones
 
 - Licencia: MIT (revisar `LICENSE`)
